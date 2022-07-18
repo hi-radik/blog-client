@@ -6,6 +6,7 @@ import { CommentsBlock } from "../components/CommentsBlock";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "../axios";
+import { useNavigate } from "react-router-dom";
 
 export const FullPost = () => {
   const [data, setData] = useState();

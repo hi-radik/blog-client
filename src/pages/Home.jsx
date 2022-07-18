@@ -10,14 +10,14 @@ import { Post } from '../components/Post';
 import { TagsBlock } from '../components/TagsBlock';
 import { CommentsBlock } from '../components/CommentsBlock';
 
-import axios from '../axios';
+
 
 export const Home = () => {
   const dispatch = useDispatch();
   const {posts, tags} = useSelector(state => state.posts);
 
-  const isPostsLoading = posts.status == 'Loading';
-  const isTagsLoading = tags.status == 'Loading';
+  const isPostsLoading = posts.status === 'Loading';
+  const isTagsLoading = tags.status === 'Loading';
   //Запрос на бэк для получения статей
   useEffect(() => {
     dispatch(fetchPosts())
