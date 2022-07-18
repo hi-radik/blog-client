@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import styles from "./Login.module.scss";
 import { useForm } from "react-hook-form";
 import {fetchUserData, selectIsAuth} from '../../redux/slices/auth'
+import { Navigate } from "react-router-dom";
 
 export const Login = () => {
 const {register, handleSubmit, setError, formState: { errors, isValid}} = useForm({
@@ -19,12 +20,20 @@ const {register, handleSubmit, setError, formState: { errors, isValid}} = useFor
 const isAuth = useSelector(selectIsAuth)
 const dispatch = useDispatch()
 //Функция сработает, если валидация норм
-const onSubmit = (values)=>{
+const onSubmit = async (values)=>{
   //Отправим на бэк
-  dispatch(fetchUserData(values))
-  
+  const data = await dispatch(fetchUserData(values))
+  if (!data.payload) {
+    return alert('Не удалось авторизоваться')
+  }
+  if ('token' in data.payload) {
+    window.localStorage.setItem('token', data.payload.token)
+  }
 }
-console.log(isAuth)
+if (isAuth) {
+  return <Navigate to='/' />
+}
+
   return (
     <Paper classes={{ root: styles.root }}>
       <Typography classes={{ root: styles.title }} variant="h5">
