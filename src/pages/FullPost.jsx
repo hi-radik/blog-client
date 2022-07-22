@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "../axios";
 import { useNavigate } from "react-router-dom";
-
+import ReactMarkdown from 'react-markdown'
 export const FullPost = () => {
   const [data, setData] = useState();
   const [isLoading, setLoading] = useState(true);
@@ -34,15 +34,16 @@ export const FullPost = () => {
       <Post
         id={data._id}
         title={data.title}
-        imageUrl="https://res.cloudinary.com/practicaldev/image/fetch/s--UnAfrEG8--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/icohm5g0axh9wjmu4oc3.png"
+        imageUrl={data.imageUrl}
         user={data.user}
-        createdAt={data.createdAt}
+        createdAt={data.createdAt.split('T')[0]}
         viewsCount={data.viewsCount}
         commentsCount={3}
         tags={data.tags}
         isFullPost
+        
       >
-        <p>{data.text}</p>
+        <ReactMarkdown children={data.text} />
       </Post>
       <CommentsBlock
         items={[
